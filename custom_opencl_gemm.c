@@ -61,6 +61,7 @@ void init_matrix(struct Row_Maj_Matrix* matrix,
     matrix->contents = (double*)malloc(num_rows*num_columns*sizeof(double*));
     time(&curr_time);
     srand(curr_time);
+    // sleep is to allow enough time to pass to generate truly random numbers
     sleep(SLEEP_SECS);
 
     for(unsigned int curr_entry = 0;
@@ -78,7 +79,8 @@ void configure_opencl_env(cl_context *context, cl_command_queue* queue,
     
     cl_platform_id platform;
     cl_device_id device;
-    
+   
+    // Check to see that we have a working opencl device to use 
     clGetPlatformIDs(NUM_CL_DEVICES, &platform, NULL);
     clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, NUM_CL_DEVICES, &device, NULL);
     *context = clCreateContext(NULL, NUM_CL_DEVICES, &device, NULL, NULL, NULL);
@@ -172,16 +174,18 @@ int main(int argc, char* argv[]) {
                { &buffer_a, &buffer_b, &result_buffer };
     struct Matrix_Multip_Operands matrix_ops =
                { &operand_a, &operand_b, &operand_result };
-    // Set Matrix Sizes
+    // Set Matrix Sizes and initialize contents of matricies
     init_matrix(&operand_a, OPERAND_A_ROWS, OPERAND_A_COLUMNS);
     init_matrix(&operand_b, OPERAND_B_ROWS, OPERAND_B_COLUMNS);
     init_matrix(&operand_result, OPERAND_A_ROWS, OPERAND_B_COLUMNS);
-    
+   
+    // Make sure we have a working OpenCL device to write stuff to 
     configure_opencl_env(&context, &queue, &program);
-
+    
+    // initialize host and device memory with appropriate data from matricies
     prep_kernel_args(&context, &queue, &program, &kernel, matrix_ops, cl_mem_ops);
 
-    // Notify user
+    // Notify user that calculations will start now
     printf(NOTIFY_USER_CALC_START);
 
     // Run the kernel
