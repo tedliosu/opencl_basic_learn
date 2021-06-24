@@ -82,7 +82,7 @@ void configure_opencl_env(cl_context *context, cl_command_queue* queue,
    
     // Check to see that we have a working opencl device to use 
     clGetPlatformIDs(NUM_CL_DEVICES, &platform, NULL);
-    clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, NUM_CL_DEVICES, &device, NULL);
+    clGetDeviceIDs(platform, CL_DEVICE_TYPE_DEFAULT, NUM_CL_DEVICES, &device, NULL);
     *context = clCreateContext(NULL, NUM_CL_DEVICES, &device, NULL, NULL, NULL);
     *queue = clCreateCommandQueue(*context, device, OPENCL_QUEUE_PROPERTIES, NULL);
     char deviceName[MAX_LEN];
