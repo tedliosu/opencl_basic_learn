@@ -141,17 +141,29 @@ void prep_kernel_args(cl_context *context, cl_command_queue* queue,
 
 void print_matrix(struct Row_Maj_Matrix* matrix) {
 
-    for (unsigned int curr_row = 0; curr_row < matrix->num_rows; ++curr_row)
-    {
-        for (unsigned int curr_column = 0; curr_column < matrix->num_columns; ++curr_column)
-        { 
-            printf("%f ", matrix->contents[curr_row * matrix->num_columns + curr_column]);
+    printf("{");
+    
+    for (unsigned int curr_row = 0; curr_row < matrix->num_rows; ++curr_row) {
+
+        printf("{");
+
+        for (unsigned int curr_column = 0; curr_column < matrix->num_columns; ++curr_column) {
+
+            if (curr_column < (matrix->num_columns - 1)) {
+              printf("%f, ", matrix->contents[curr_row * matrix->num_columns + curr_column]);
+            } else {
+              printf("%f", matrix->contents[curr_row * matrix->num_columns + curr_column]);
+            }
        
         }
-        printf("\n");
+        if (curr_row < (matrix->num_rows - 1)) {
+          printf("}, ");
+        } else {
+          printf("}");
+        }
     }
     
-    printf("\n");
+    printf("}\n\n");
 
 }
 

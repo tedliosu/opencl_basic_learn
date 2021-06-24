@@ -25,17 +25,22 @@
 #define OPENCL_QUEUE_PROPERTIES 0
 // Number of OpenCL Kernel programs to be loaded
 #define OPENCL_KERNEL_PROGS 1
-// Threadblock sizes
-#define TS 1024
+/*
+ * Threadblock sizes; each size of each dimension
+ * of the matricies being multiplied together MUST
+ * BE divisible by the value of this macro per
+ * OpenCL API specification
+ */
+#define TS 3
 // OpenCL device name max length
 #define MAX_LEN 1024
 #define CL_BUFFER_OFFSET 0
 
 // Matrix sizes
-#define OPERAND_A_ROWS 5000
-#define OPERAND_A_COLUMNS 5000
+#define OPERAND_A_ROWS 3
+#define OPERAND_A_COLUMNS 3
 #define OPERAND_B_ROWS OPERAND_A_COLUMNS
-#define OPERAND_B_COLUMNS 5000
+#define OPERAND_B_COLUMNS 3
 // Number of dimensions of each operand
 #define OPERAND_DIMS 2
 
