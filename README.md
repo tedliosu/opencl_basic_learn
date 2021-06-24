@@ -2,8 +2,9 @@
 # Instructions
 
 1. Setup OpenCL development on your machine appropriately
-   - Refer to [these set of instructions](https://github.com/tedliosu/opencl_install_instructions)
-     if **running a Linux distro** on an AMD GPU and/or any kind of CPU.
+   1. Refer to [these set of instructions](https://github.com/tedliosu/opencl_install_instructions)
+      if **running a Linux distro** on an AMD GPU and/or any kind of CPU.
+   2. Next (if on a Linux distro), make sure your "CPPFLAGS" and "LDFLAGS" environment variables are set appropriately. (e.g. CPPFLAGS="-I/opt/rocm/opencl/include" LDFLAGS="-L/opt/rocm/opencl/lib").
 2. Git clone this repository
 3. Change working directory to cloned repo
 4. Run "make all"
